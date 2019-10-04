@@ -1,28 +1,21 @@
 var express = require('express');
 var router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://<USER>:<PASS>@cluster0-2eofd.mongodb.net/admin?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
-var database, collection;
-
-const DATABASE_NAME = 'bookstoreDB'
-const COLLECTION_NAME = 'bookCOLLECTION'
+const uri = "mongodb+srv://viewer:teampass@cluster0-2eofd.mongodb.net/bookstoreDB?retryWrites=true&w=majority"
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const assert = require('assert');
 
 /* GET Book listings */
 router.get('/', function(req, res, next) {
 
-    client.connect(err => {
-        collection = client.db("test").collection("devices");
-        // perform actions on the collection object
+    client.connect(function(err) {
+        assert.equal(null, err);
+        console.log("Connected correctly to server");
+      
         client.close();
       });
 
-    collection.find({}).toArray((error, result) => {
-        if(error) {
-            return response.status(500).send(error);
-        }
-        response.send(result);
-    });
+      res.send("KMS")
 
 });
 
